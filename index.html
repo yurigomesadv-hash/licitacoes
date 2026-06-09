@@ -1,1136 +1,246 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Apresentação em fluxo contínuo sobre licitações, planejamento, mercado público, sustentabilidade, assimetria de informações e matriz de riscos." />
-  <title>Licitações | Planejamento, mercado público e governança</title>
-  <style>
-    :root {
-      --navy-950: #020817;
-      --navy-900: #071B3A;
-      --navy-800: #0B2E5C;
-      --navy-700: #123F7A;
-      --navy-600: #1C579C;
-      --gold-500: #D7B46A;
-      --gold-400: #F3D98B;
-      --gold-300: #FFE9A8;
-      --cream: #F8F3E6;
-      --white: #FFFFFF;
-      --muted: #BCD0EA;
-      --muted-2: #D6E2F4;
-      --card: rgba(255, 255, 255, 0.08);
-      --card-2: rgba(255, 255, 255, 0.12);
-      --border: rgba(243, 217, 139, 0.28);
-      --shadow: rgba(0, 0, 0, 0.34);
-      --max: 1160px;
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-    }
-
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 112px;
-    }
-
-    body {
-      margin: 0;
-      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-      color: var(--white);
-      background:
-        radial-gradient(circle at 10% 5%, rgba(243, 217, 139, 0.23), transparent 32%),
-        radial-gradient(circle at 90% 20%, rgba(28, 87, 156, 0.30), transparent 28%),
-        linear-gradient(135deg, var(--navy-950), var(--navy-900) 58%, #031126);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a { color: inherit; }
-
-    .progress {
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: rgba(255,255,255,0.10);
-    }
-
-    .progress__bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--gold-500), var(--gold-300));
-      box-shadow: 0 0 16px rgba(243, 217, 139, 0.55);
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      backdrop-filter: blur(18px);
-      background: rgba(2, 8, 23, 0.78);
-      border-bottom: 1px solid rgba(243, 217, 139, 0.22);
-    }
-
-    .topbar__inner {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 14px 22px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 210px;
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: .02em;
-    }
-
-    .brand__mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      box-shadow: 0 10px 22px rgba(215, 180, 106, 0.26);
-      position: relative;
-      flex: 0 0 auto;
-    }
-
-    .brand__mark::after {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      border: 2px solid var(--navy-900);
-      border-radius: 50%;
-    }
-
-    .brand small {
-      display: block;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 0.73rem;
-      letter-spacing: 0;
-      margin-top: -3px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 2px;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(243, 217, 139, .5) transparent;
-    }
-
-    .nav a {
-      display: inline-flex;
-      align-items: center;
-      white-space: nowrap;
-      text-decoration: none;
-      color: var(--muted-2);
-      border: 1px solid rgba(255,255,255,0.11);
-      background: rgba(255,255,255,0.05);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: .86rem;
-      font-weight: 700;
-      transition: .18s ease;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      color: var(--navy-950);
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      border-color: rgba(243, 217, 139, .82);
-      transform: translateY(-1px);
-    }
-
-    .hero {
-      min-height: 88vh;
-      display: grid;
-      place-items: center;
-      padding: 84px 22px 64px;
-      position: relative;
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
-      background-size: 54px 54px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,.25), rgba(0,0,0,0));
-      z-index: -1;
-    }
-
-    .hero__content {
-      max-width: var(--max);
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 42px;
-      align-items: center;
-    }
-
-    .eyebrow {
-      color: var(--gold-400);
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      font-weight: 900;
-      font-size: .78rem;
-      margin: 0 0 18px;
-    }
-
-    h1, h2, h3 { line-height: 1.08; margin: 0; }
-
-    h1 {
-      font-size: clamp(2.8rem, 7vw, 6.3rem);
-      max-width: 920px;
-      letter-spacing: -0.075em;
-    }
-
-    h1 .gold,
-    h2 .gold,
-    h3 .gold { color: var(--gold-400); }
-
-    .hero__lead {
-      color: var(--muted-2);
-      font-size: clamp(1.06rem, 2vw, 1.32rem);
-      max-width: 760px;
-      margin: 28px 0 0;
-    }
-
-    .author {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 1rem;
-      font-weight: 700;
-    }
-
-    .author a,
-    .references a {
-      color: var(--gold-400);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(243, 217, 139, .55);
-      transition: .18s ease;
-    }
-
-    .author a:hover,
-    .references a:hover {
-      color: var(--gold-300);
-      border-bottom-color: var(--gold-300);
-    }
-
-    .references a::after {
-      content: " ↗";
-      font-weight: 900;
-      opacity: .84;
-    }
-
-    .hero__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 34px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 18px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 850;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.08);
-      box-shadow: 0 14px 34px rgba(0,0,0,0.18);
-      transition: .18s ease;
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn--gold {
-      color: var(--navy-950);
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      border-color: rgba(243, 217, 139, .9);
-    }
-
-    .hero-card {
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border-radius: var(--radius-xl);
-      box-shadow: 0 30px 80px var(--shadow);
-      padding: 28px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(243, 217, 139, 0.14);
-      right: -70px;
-      top: -80px;
-    }
-
-    .hero-card h2 {
-      font-size: 1.42rem;
-      color: var(--gold-400);
-      margin-bottom: 18px;
-    }
-
-    .hero-card ol {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--muted-2);
-      font-weight: 650;
-    }
-
-    .hero-card li + li { margin-top: 12px; }
-
-    main {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 22px 80px;
-    }
-
-    .section {
-      margin: 28px 0 42px;
-      padding: 34px;
-      border: 1px solid rgba(243, 217, 139, 0.19);
-      border-radius: var(--radius-xl);
-      background: linear-gradient(180deg, rgba(11, 46, 92, .48), rgba(255,255,255,.045));
-      box-shadow: 0 24px 68px rgba(0,0,0,.20);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section::after {
-      content: "";
-      position: absolute;
-      inset: auto -120px -130px auto;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: rgba(215, 180, 106, 0.10);
-      pointer-events: none;
-    }
-
-    .section__head {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 24px;
-      align-items: start;
-      margin-bottom: 26px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .number {
-      color: var(--navy-950);
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      border-radius: 22px;
-      padding: 18px 16px;
-      text-align: center;
-      font-size: 2.3rem;
-      font-weight: 950;
-      line-height: 1;
-      box-shadow: 0 18px 34px rgba(0,0,0,.22);
-    }
-
-    .section h2 {
-      font-size: clamp(1.8rem, 4vw, 3.25rem);
-      letter-spacing: -.045em;
-      margin-bottom: 12px;
-    }
-
-    .section__intro {
-      color: var(--muted-2);
-      font-size: 1.08rem;
-      max-width: 880px;
-      margin: 0;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .grid--2 { grid-template-columns: repeat(2, 1fr); }
-
-    .card {
-      padding: 22px;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.075);
-      min-height: 150px;
-    }
-
-    .card h3 {
-      font-size: 1.08rem;
-      color: var(--gold-400);
-      margin-bottom: 10px;
-    }
-
-    .card p,
-    .card li {
-      color: var(--muted-2);
-      margin: 0;
-      font-size: .98rem;
-    }
-
-    .card ul {
-      margin: 0;
-      padding-left: 18px;
-    }
-
-    .quote {
-      margin: 24px 0 0;
-      padding: 24px;
-      border-left: 5px solid var(--gold-500);
-      background: rgba(2, 8, 23, .34);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-      color: var(--cream);
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: -.02em;
-      position: relative;
-      z-index: 1;
-    }
-
-    .flow {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .flow__item {
-      padding: 18px 14px;
-      min-height: 132px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(243, 217, 139, .24);
-      background: rgba(255,255,255,.07);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .flow__item strong {
-      color: var(--gold-400);
-      font-size: .9rem;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    .flow__item span {
-      color: var(--muted-2);
-      font-weight: 700;
-      margin-top: 12px;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .check {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.11);
-      color: var(--muted-2);
-      font-weight: 720;
-    }
-
-    .check span:first-child {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      color: var(--navy-950);
-      display: grid;
-      place-items: center;
-      font-weight: 950;
-    }
-
-
-
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tool-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: 26px;
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(243, 217, 139, .30);
-      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.055));
-      text-decoration: none;
-      min-height: 250px;
-      box-shadow: 0 22px 48px rgba(0,0,0,.18);
-      transition: .18s ease;
-    }
-
-    .tool-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(243, 217, 139, .82);
-      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.075));
-    }
-
-    .tool-card__icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      color: var(--navy-950);
-      font-size: 1.65rem;
-      font-weight: 950;
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      box-shadow: 0 12px 28px rgba(215, 180, 106, .22);
-    }
-
-    .tool-card h3 {
-      color: var(--gold-400);
-      font-size: 1.35rem;
-      margin: 0;
-    }
-
-    .tool-card p {
-      color: var(--muted-2);
-      margin: 0;
-      font-weight: 650;
-    }
-
-    .tool-card__cta {
-      margin-top: auto;
-      color: var(--gold-300);
-      font-weight: 900;
-    }
-
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .visual-card {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.075);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: 0 20px 56px rgba(0,0,0,.18);
-    }
-
-    .visual-card a {
-      display: block;
-      text-decoration: none;
-    }
-
-    .visual-card img {
-      width: 100%;
-      display: block;
-      background: #fff;
-    }
-
-    .visual-card figcaption {
-      padding: 16px 20px 18px;
-      color: var(--muted-2);
-      font-weight: 750;
-    }
-
-    .visual-card figcaption strong {
-      color: var(--gold-400);
-    }
-
-    .references {
-      columns: 2;
-      column-gap: 28px;
-      color: var(--muted-2);
-      position: relative;
-      z-index: 1;
-    }
-
-    .references li {
-      break-inside: avoid;
-      margin-bottom: 10px;
-    }
-
-    .footer {
-      padding: 42px 22px 58px;
-      text-align: center;
-      color: var(--muted);
-      border-top: 1px solid rgba(243,217,139,.16);
-      background: rgba(2,8,23,.35);
-    }
-
-    .top-link {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 998;
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--navy-950);
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      text-decoration: none;
-      font-weight: 950;
-      box-shadow: 0 14px 34px rgba(0,0,0,.32);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: .2s ease;
-    }
-
-    .top-link.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 980px) {
-      .topbar__inner { align-items: flex-start; flex-direction: column; }
-      .brand { min-width: auto; }
-      .nav { width: 100%; }
-      .hero__content { grid-template-columns: 1fr; }
-      .grid,
-      .grid--2,
-      .flow,
-      .tool-grid { grid-template-columns: 1fr 1fr; }
-      .section__head { grid-template-columns: 82px 1fr; }
-      .number { font-size: 1.7rem; }
-  
-
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tool-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      padding: 26px;
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(243, 217, 139, .30);
-      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.055));
-      text-decoration: none;
-      min-height: 250px;
-      box-shadow: 0 22px 48px rgba(0,0,0,.18);
-      transition: .18s ease;
-    }
-
-    .tool-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(243, 217, 139, .82);
-      background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.075));
-    }
-
-    .tool-card__icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      color: var(--navy-950);
-      font-size: 1.65rem;
-      font-weight: 950;
-      background: linear-gradient(145deg, var(--gold-300), var(--gold-500));
-      box-shadow: 0 12px 28px rgba(215, 180, 106, .22);
-    }
-
-    .tool-card h3 {
-      color: var(--gold-400);
-      font-size: 1.35rem;
-      margin: 0;
-    }
-
-    .tool-card p {
-      color: var(--muted-2);
-      margin: 0;
-      font-weight: 650;
-    }
-
-    .tool-card__cta {
-      margin-top: auto;
-      color: var(--gold-300);
-      font-weight: 900;
-    }
-
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .visual-card {
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.075);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: 0 20px 56px rgba(0,0,0,.18);
-    }
-
-    .visual-card a {
-      display: block;
-      text-decoration: none;
-    }
-
-    .visual-card img {
-      width: 100%;
-      display: block;
-      background: #fff;
-    }
-
-    .visual-card figcaption {
-      padding: 16px 20px 18px;
-      color: var(--muted-2);
-      font-weight: 750;
-    }
-
-    .visual-card figcaption strong {
-      color: var(--gold-400);
-    }
-
-    .references { columns: 1; }
-    }
-
-    @media (max-width: 620px) {
-      .hero { padding-top: 56px; }
-      .section { padding: 24px; border-radius: 22px; }
-      .section__head { grid-template-columns: 1fr; gap: 14px; }
-      .number { width: 74px; }
-      .grid,
-      .grid--2,
-      .flow,
-      .tool-grid { grid-template-columns: 1fr; }
-      .nav a { font-size: .82rem; padding: 7px 10px; }
-      .hero-card { padding: 22px; }
-    }
-
-    @media print {
-      .topbar, .progress, .top-link, .hero__actions { display: none !important; }
-      body { background: white; color: #111; }
-      .hero, main, .footer { color: #111; }
-      .section, .hero-card, .card, .flow__item, .check { border-color: #bbb; background: #fff; box-shadow: none; }
-      .section__intro, .card p, .card li, .check, .references, .hero__lead { color: #333; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-list Pregão - Licitações e Contratos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; color: #333; line-height: 1.4; }
+        h1 { text-align: center; color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        th, td { border: 1px solid #000; padding: 8px; vertical-align: top; }
+        th { background-color: #f2f2f2; text-align: center; }
+        .num { text-align: center; font-weight: bold; width: 5%; }
+        .desc { width: 50%; }
+        .status { width: 15%; text-align: left; }
+        .obs { width: 30%; }
+        textarea { width: 100%; min-height: 50px; box-sizing: border-box; padding: 5px; font-family: inherit; resize: vertical; }
+        .f { font-size: 0.8em; color: #555; display: block; margin-top: 5px; border-top: 1px dashed #ccc; padding-top: 3px; }
+        .btn-container { text-align: center; margin-top: 30px; margin-bottom: 30px; }
+        .btn { padding: 12px 24px; font-size: 16px; font-weight: bold; cursor: pointer; background-color: #2980b9; color: white; border: none; border-radius: 5px; }
+        .btn:hover { background-color: #1a5276; }
+        label { display: block; margin-bottom: 5px; cursor: pointer; }
+        
+        @media print {
+            .btn-container { display: none; }
+            body { margin: 0; font-size: 12px; }
+            textarea { border: none; resize: none; background: transparent; }
+            th { background-color: #e0e0e0 !important; -webkit-print-color-adjust: exact; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
+        }
+    
+        .site-toolbar { position: sticky; top: 0; z-index: 1000; margin: -20px -20px 22px; padding: 12px 20px; display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: linear-gradient(135deg, #020817, #0B2E5C); color: #fff; border-bottom: 3px solid #D7B46A; box-shadow: 0 8px 28px rgba(0,0,0,.18); }
+        .site-toolbar strong { color: #F3D98B; font-size: 1rem; letter-spacing: .01em; }
+        .site-toolbar nav { display: flex; gap: 8px; flex-wrap: wrap; }
+        .site-toolbar a { color: #fff; text-decoration: none; font-weight: 700; padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,.24); background: rgba(255,255,255,.08); }
+        .site-toolbar a:hover { color: #020817; background: linear-gradient(145deg, #FFE9A8, #D7B46A); }
+    
+    </style>
 </head>
 <body>
-  <div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
 
-  <header class="topbar">
-    <div class="topbar__inner">
-      <a class="brand" href="#top" aria-label="Voltar ao início">
-        <span class="brand__mark" aria-hidden="true"></span>
-        <span>Licitações <small>planejamento • risco • valor público</small></span>
-      </a>
-      <nav class="nav" aria-label="Navegação da apresentação">
-        <a href="#intro">Introdução</a>
-        <a href="#mercado">Mercado público</a>
-        <a href="#sustentabilidade">Sustentabilidade</a>
-        <a href="#menor-preco">Menor preço</a>
-        <a href="#informacao">Informação</a>
-        <a href="#planejamento">Planejamento</a>
-        <a href="#riscos">Riscos</a>
-        <a href="#juridico">Jurídico</a>
-        <a href="#ferramentas">Ferramentas</a>
-        <a href="#infograficos">Infográficos</a>
-        <a href="./checklist/">Checklist</a>
-        <a href="./calculadora/">Calculadora</a>
-        <a href="#roteiro">Roteiro</a>
-        <a href="#referencias">Referências</a>
-      </nav>
+    <div class="site-toolbar">
+        <strong>Check-list Pregão</strong>
+        <nav>
+            <a href="../">Apresentação</a>
+            <a href="../#ferramentas">Ferramentas</a>
+            <a href="../checklist/">Checklist</a>
+            <a href="../calculadora/">Calculadora</a>
+            <a href="../#infograficos">Infográficos</a>
+        </nav>
     </div>
-  </header>
 
-  <section class="hero" id="top">
-    <div class="hero__content">
-      <div>
-        <p class="eyebrow">Apresentação em fluxo contínuo</p>
-        <h1>Licitações como <span class="gold">governança pública</span></h1>
-        <p class="hero__lead">Uma leitura teórica e prática das contratações públicas a partir do planejamento, da assimetria de informações, da sustentabilidade, da matriz de riscos e da entrega de valor público.</p>
-        <p class="author">Por <a href="http://lattes.cnpq.br/3487823015923340" target="_blank" rel="noopener noreferrer">Yuri Alexander Nogueira Gomes Nascimento</a></p>
-        <div class="hero__actions">
-          <a class="btn btn--gold" href="#intro">Começar a apresentação →</a>
-          <a class="btn" href="#ferramentas">Ferramentas</a>
-          <a class="btn" href="#infograficos">Infográficos</a>
-        </div>
-      </div>
-      <aside class="hero-card" aria-label="Roteiro da apresentação">
-        <h2>Roteiro de leitura</h2>
-        <ol>
-          <li>Licitação como decisão pública, não mero rito.</li>
-          <li>Estado como consumidor e indutor de mercados.</li>
-          <li>Sustentabilidade ampla: ambiental, social e econômica.</li>
-          <li>Menor preço, seleção adversa e assimetria de informações.</li>
-          <li>Planejamento, riscos, matriz e papel do jurídico.</li>
-          <li>Ferramentas práticas e infográficos de apoio.</li>
-        </ol>
-      </aside>
+
+    <h1>CHECK-LIST PREGÃO</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Descrição / Fundamento Legal</th>
+                <th>Status</th>
+                <th>Observações/Eventos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="num">1</td>
+                <td class="desc"><strong>Processo autuado no SEI/SISLOG - iniciado por Documento de Oficialização de Demanda - DOD.</strong><span class="f">Art. 7º, I, c/c art. 8º do Decreto estadual nº 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i1"> SIM</label><label><input type="radio" name="i1"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea placeholder="Observações..."></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">2</td>
+                <td class="desc"><strong>Portaria contendo a designação das funções essenciais.</strong><span class="f">Art. 7º, II, c/c arts. 9º a 11 do Dec. est. 10.207/2023 e 10.216/2023</span></td>
+                <td class="status"><label><input type="radio" name="i2"> SIM</label><label><input type="radio" name="i2"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">3</td>
+                <td class="desc"><strong>Estudo Técnico Preliminar - ETP (simplificado ou não).</strong><span class="f">Art. 18, § 1º, da Lei 14.133/2021 e art. 7º, III do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i3"> SIM</label><label><input type="radio" name="i3"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">4</td>
+                <td class="desc"><strong>Análise de riscos e, se for o caso, matriz de riscos.</strong><span class="f">Art. 6º, XXVII, art. 18, X, e art. 22 da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i4"> SIM</label><label><input type="radio" name="i4"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">5</td>
+                <td class="desc"><strong>Orçamento estimado da contratação (compatibilidade de preços).</strong><span class="f">Art. 8º, IV, da Lei 14.133/2021 e art. 7º, V do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i5"> SIM</label><label><input type="radio" name="i5"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">6</td>
+                <td class="desc"><strong>Evidências do orçamento estimado (documentos de suporte).</strong><span class="f">Art. 18, caput e § 1º, do Decreto estadual nº 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i6"> SIM</label><label><input type="radio" name="i6"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">7</td>
+                <td class="desc"><strong>Termo de Referência - TR/anteprojeto/projeto básico/executivo.</strong><span class="f">Art. 18, II, Lei 14.133/2021, e art. 7º, VI do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i7"> SIM</label><label><input type="radio" name="i7"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">8.1</td>
+                <td class="desc"><strong>Indicação de recursos por DAOF assinada pelo Ordenador de Despesa.</strong><span class="f">Art. 16, II, da LC 101/2000, e art. 13º, §3º do Dec. 9.943/2021</span></td>
+                <td class="status"><label><input type="radio" name="i81"> SIM</label><label><input type="radio" name="i81"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">8.2/9</td>
+                <td class="desc"><strong>IPOF ou RDF (TDO) com status liberado.</strong><span class="f">Art. 11, I do Decreto estadual nº 9.943/2021 e IN 1.605/2025-SEE</span></td>
+                <td class="status"><label><input type="radio" name="i82"> SIM</label><label><input type="radio" name="i82"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">10</td>
+                <td class="desc"><strong>Manifestação favorável da SGG para contratações de TIC.</strong><span class="f">Arts. 15 a 23 do Dec. 10.680/2025 e IN nº 2/2026-SGG</span></td>
+                <td class="status"><label><input type="radio" name="i10"> SIM</label><label><input type="radio" name="i10"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">11</td>
+                <td class="desc"><strong>Autorização da UCC/SEAD (frotas) e do Ordenador de Despesa.</strong><span class="f">Dec. 9.541/2019 e Art. 28 do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i11"> SIM</label><label><input type="radio" name="i11"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">12</td>
+                <td class="desc"><strong>Autorização governamental delegada (não se aplica a autarquias/fundações).</strong><span class="f">Art. 84-A da Lei 17.928/2012 e Dec. 9.898/2021</span></td>
+                <td class="status"><label><input type="radio" name="i12"> SIM</label><label><input type="radio" name="i12"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">13.1</td>
+                <td class="desc"><strong>Minuta de edital de licitação (observando minuta padrão).</strong><span class="f">Art. 18, V, Lei 14.133/2021 e art. 7º, VIII do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i131"> SIM</label><label><input type="radio" name="i131"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">13.2</td>
+                <td class="desc"><strong>Minuta de termo de contrato ou histórico da nota de empenho.</strong><span class="f">Art. 18, VI, Lei 14.133/2021 e art. 7º, IX do Dec. 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i132"> SIM</label><label><input type="radio" name="i132"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">14</td>
+                <td class="desc"><strong>Elaboração dos pareceres técnicos e autorizações cabíveis.</strong><span class="f">Art. 7º, X, do Decreto estadual nº 10.207/2023</span></td>
+                <td class="status"><label><input type="radio" name="i14"> SIM</label><label><input type="radio" name="i14"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">15.1</td>
+                <td class="desc"><strong>Parecer jurídico prévio elaborado pela Procuradoria Setorial.</strong><span class="f">Art. 53 da Lei 14.133/2021 e art. 47 da LC 58/2006</span></td>
+                <td class="status"><label><input type="radio" name="i151"> SIM</label><label><input type="radio" name="i151"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">16.1</td>
+                <td class="desc"><strong>Apresentação da versão final do edital e anexos, devidamente assinada.</strong><span class="f">Art. 12, I, c/c art. 17, II da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i161"> SIM</label><label><input type="radio" name="i161"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">16.2</td>
+                <td class="desc"><strong>Publicação do extrato (DOE) e disponibilização (PNCP/SISLOG).</strong><span class="f">Arts. 54 e 55 da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i162"> SIM</label><label><input type="radio" name="i162"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">20.1</td>
+                <td class="desc"><strong>Sessão pública virtual sob a incumbência do agente/pregoeiro.</strong><span class="f">Art. 24 do Decreto estadual nº 10.247/2023</span></td>
+                <td class="status"><label><input type="radio" name="i201"> SIM</label><label><input type="radio" name="i201"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">20.6.1</td>
+                <td class="desc"><strong>CRC CADFOR ou SICAF federal do licitante melhor classificado.</strong><span class="f">Art. 70, II, da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i2061"> SIM</label><label><input type="radio" name="i2061"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">20.6.5</td>
+                <td class="desc"><strong>Comprovação da regularidade fiscal (CPF/CNPJ e Fazendas).</strong><span class="f">Art. 68, I a IV da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i2065"> SIM</label><label><input type="radio" name="i2065"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">20.6.7</td>
+                <td class="desc"><strong>Comprovação da regularidade trabalhista.</strong><span class="f">Art. 68, V, da Lei nº 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i2067"> SIM</label><label><input type="radio" name="i2067"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">20.12</td>
+                <td class="desc"><strong>Juntada da ata consolidada de realização do pregão.</strong><span class="f">Art. 17, § 2º, da Lei 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i2012"> SIM</label><label><input type="radio" name="i2012"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">21</td>
+                <td class="desc"><strong>Homologação do certame.</strong><span class="f">Art. 17, VII, da Lei 14.133/2021 e art. 50 do Dec. 10.247/2023</span></td>
+                <td class="status"><label><input type="radio" name="i21"> SIM</label><label><input type="radio" name="i21"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">25</td>
+                <td class="desc"><strong>Versão final do contrato a ser assinado pelas partes.</strong><span class="f">Arts. 91 e 92 da Lei federal nº 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i25"> SIM</label><label><input type="radio" name="i25"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">28.1</td>
+                <td class="desc"><strong>Formalização da contratação pelas partes.</strong><span class="f">Art. 95 da Lei 14.133/2021 e art. 84-A da Lei est. 17.928/2012</span></td>
+                <td class="status"><label><input type="radio" name="i281"> SIM</label><label><input type="radio" name="i281"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+            <tr>
+                <td class="num">29</td>
+                <td class="desc"><strong>Comprovação do recolhimento da garantia contratual, se for o caso.</strong><span class="f">Arts. 96 a 102 da Lei nº 14.133/2021</span></td>
+                <td class="status"><label><input type="radio" name="i29"> SIM</label><label><input type="radio" name="i29"> NÃO/N.A.</label></td>
+                <td class="obs"><textarea></textarea></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-container">
+        <button class="btn" onclick="window.print()">Gerar PDF / Imprimir</button>
     </div>
-  </section>
 
-  <main>
-    <section class="section" id="intro" data-nav="Introdução">
-      <div class="section__head">
-        <div class="number">01</div>
-        <div>
-          <h2>A licitação não começa no <span class="gold">edital</span>.</h2>
-          <p class="section__intro">A licitação deve ser lida como um processo de decisão pública: ela transforma uma necessidade administrativa em uma escolha de mercado, em uma relação contratual e, ao final, em uma entrega concreta de política pública.</p>
-        </div>
-      </div>
-      <div class="grid grid--2">
-        <article class="card">
-          <h3>Do rito à decisão</h3>
-          <p>Não basta cumprir fases, prazos e modelos. É necessário compreender o problema público, o objeto, o mercado fornecedor e os riscos de execução.</p>
-        </article>
-        <article class="card">
-          <h3>Da compra à política pública</h3>
-          <p>Contratar é adquirir meios para realizar direitos, manter serviços públicos e induzir comportamentos econômicos compatíveis com o interesse público.</p>
-        </article>
-      </div>
-      <blockquote class="quote">Licitar bem não é apenas cumprir rito: é desenhar mercados públicos melhores.</blockquote>
-    </section>
-
-    <section class="section" id="mercado" data-nav="Mercado público">
-      <div class="section__head">
-        <div class="number">02</div>
-        <div>
-          <h2>O Estado compra, mas também <span class="gold">induz</span>.</h2>
-          <p class="section__intro">Como consumidor organizacional de grande escala, a Administração influencia padrões produtivos, preços, qualidade, inovação, sustentabilidade e governança do mercado fornecedor.</p>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>Demanda</h3>
-          <p>O volume das compras públicas desloca incentivos e orienta o comportamento de agentes privados.</p>
-        </article>
-        <article class="card">
-          <h3>Critério</h3>
-          <p>A escolha entre menor preço, técnica e preço, maior desconto ou outros critérios comunica o que o Estado valoriza.</p>
-        </article>
-        <article class="card">
-          <h3>Mercado</h3>
-          <p>Fornecedores adaptam produtos, práticas e estratégias ao desenho das contratações estatais.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="sustentabilidade" data-nav="Sustentabilidade">
-      <div class="section__head">
-        <div class="number">03</div>
-        <div>
-          <h2>Sustentabilidade não é só <span class="gold">meio ambiente</span>.</h2>
-          <p class="section__intro">A contratação sustentável exige olhar sistêmico: impacto ambiental, eficiência econômica, direitos humanos, trabalho digno, redução de desigualdades e capacidade de execução.</p>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>Ambiental</h3>
-          <p>Redução de impactos, uso racional de recursos, ciclo de vida do objeto e critérios ambientais objetivamente verificáveis.</p>
-        </article>
-        <article class="card">
-          <h3>Social</h3>
-          <p>Proteção de trabalhadores, inclusão, direitos humanos, redução de desigualdades e prevenção de práticas abusivas na cadeia contratual.</p>
-        </article>
-        <article class="card">
-          <h3>Econômica</h3>
-          <p>Não se confunde preço com valor: a contratação pode custar menos no início e gerar maior custo social, ambiental ou operacional depois.</p>
-        </article>
-      </div>
-      <blockquote class="quote">O desafio é transformar valores amplos em critérios objetivos, proporcionais e controláveis.</blockquote>
-    </section>
-
-    <section class="section" id="menor-preco" data-nav="Menor preço">
-      <div class="section__head">
-        <div class="number">04</div>
-        <div>
-          <h2>O paradoxo do <span class="gold">menor preço</span>.</h2>
-          <p class="section__intro">O menor preço tem virtudes: simplicidade, objetividade e competitividade. Mas sua utilização indiscriminada pode selecionar propostas inferiores e expulsar bons fornecedores do mercado público.</p>
-        </div>
-      </div>
-      <div class="grid grid--2">
-        <article class="card">
-          <h3>Economia aparente</h3>
-          <p>A Administração economiza na disputa, mas pode pagar depois com baixa qualidade, aditivos, atrasos, paralisações, litígios e fiscalização mais custosa.</p>
-        </article>
-        <article class="card">
-          <h3>Seleção adversa</h3>
-          <p>Quando qualidade não é adequadamente revelada, propostas boas e ruins parecem equivalentes. O mercado passa a premiar quem reduz custo, ainda que sacrifique desempenho.</p>
-        </article>
-      </div>
-      <blockquote class="quote">O menor preço pode economizar na licitação e encarecer a política pública.</blockquote>
-    </section>
-
-    <section class="section" id="informacao" data-nav="Informação">
-      <div class="section__head">
-        <div class="number">05</div>
-        <div>
-          <h2>Poder jurídico não significa <span class="gold">superioridade informacional</span>.</h2>
-          <p class="section__intro">O fornecedor normalmente conhece melhor custos, limitações técnicas, riscos de execução e qualidade real do objeto. Por isso, a licitação deve ser estruturada para revelar informações úteis antes da contratação.</p>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>Seleção adversa</h3>
-          <p>Problema pré-contratual: a Administração não distingue bem os fornecedores e pode escolher a proposta inadequada.</p>
-        </article>
-        <article class="card">
-          <h3>Risco moral</h3>
-          <p>Problema pós-contratual: depois de contratado, o fornecedor pode reduzir esforço, qualidade ou custos de forma oportunista.</p>
-        </article>
-        <article class="card">
-          <h3>Revelação de informações</h3>
-          <p>Habilitação proporcional, critérios técnicos, amostras, desempenho, fiscalização e incentivos ajudam a aproximar preço e qualidade.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="planejamento" data-nav="Planejamento">
-      <div class="section__head">
-        <div class="number">06</div>
-        <div>
-          <h2>A fase preparatória é o <span class="gold">coração racional</span> da contratação.</h2>
-          <p class="section__intro">Planejar é transformar necessidade pública em solução contratual adequada. ETP, TR, projeto básico, pesquisa de preços e análise de riscos não são anexos burocráticos: são instrumentos de decisão.</p>
-        </div>
-      </div>
-      <div class="flow" aria-label="Fluxo lógico da fase preparatória">
-        <div class="flow__item"><strong>1. Problema</strong><span>Qual necessidade pública deve ser atendida?</span></div>
-        <div class="flow__item"><strong>2. Mercado</strong><span>Quais soluções existem e como os fornecedores atuam?</span></div>
-        <div class="flow__item"><strong>3. Solução</strong><span>Qual modelo atende melhor ao interesse público?</span></div>
-        <div class="flow__item"><strong>4. Preço</strong><span>O orçamento reflete valor, escopo, qualidade e risco?</span></div>
-        <div class="flow__item"><strong>5. Contrato</strong><span>Como executar, medir, fiscalizar, pagar e corrigir?</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="riscos" data-nav="Riscos">
-      <div class="section__head">
-        <div class="number">07</div>
-        <div>
-          <h2>Contratos administrativos são <span class="gold">incompletos</span>.</h2>
-          <p class="section__intro">A execução ocorre no tempo e está sujeita a variações de preço, comportamento, tecnologia, fiscalização, eventos imprevisíveis e mudanças de contexto. A boa contratação reduz custos da imprevisibilidade, mas não os elimina.</p>
-        </div>
-      </div>
-      <div class="grid grid--2">
-        <article class="card">
-          <h3>Risco</h3>
-          <p>Pode ser identificado, estimado e alocado. A matriz de riscos permite prever quem suporta determinados eventos e quais consequências contratuais decorrem deles.</p>
-        </article>
-        <article class="card">
-          <h3>Incerteza</h3>
-          <p>Não pode ser plenamente mensurada. Exige flexibilidade, governança, registro decisório, gestão contratual ativa e interpretação orientada à preservação do interesse público.</p>
-        </article>
-      </div>
-      <div class="grid" style="margin-top:16px">
-        <article class="card">
-          <h3>Matriz como planejamento</h3>
-          <p>Força a Administração a conhecer melhor o objeto e seus pontos críticos.</p>
-        </article>
-        <article class="card">
-          <h3>Matriz como equilíbrio</h3>
-          <p>Define previamente quem suporta os custos de riscos alocados.</p>
-        </article>
-        <article class="card">
-          <h3>Matriz como interpretação</h3>
-          <p>Orienta a solução de conflitos futuros e reduz disputas sobre reequilíbrio.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="juridico" data-nav="Jurídico">
-      <div class="section__head">
-        <div class="number">08</div>
-        <div>
-          <h2>O jurídico não deve ser só <span class="gold">freio</span>.</h2>
-          <p class="section__intro">A assessoria jurídica pode funcionar como arquitetura institucional da boa contratação: preserva segurança, mas também ajuda a estruturar escolhas proporcionais, motivadas e orientadas a resultado.</p>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card">
-          <h3>Segurança</h3>
-          <p>Evitar nulidades, direcionamentos, omissões de planejamento, riscos desnecessários e fragilidades de controle.</p>
-        </article>
-        <article class="card">
-          <h3>Eficiência</h3>
-          <p>Permitir escolhas técnicas mais sofisticadas quando forem necessárias, motivadas e compatíveis com o objeto.</p>
-        </article>
-        <article class="card">
-          <h3>Integridade</h3>
-          <p>A inovação da Lei nº 14.133/2021 deve dialogar com a experiência acumulada, sem rupturas precipitadas e sem culto acrítico ao passado.</p>
-        </article>
-      </div>
-      <blockquote class="quote">Antes de derrubar uma “cerca”, é preciso compreender por que ela foi construída.</blockquote>
-    </section>
-
-
-    <section class="section" id="ferramentas" data-nav="Ferramentas">
-      <div class="section__head">
-        <div class="number">09</div>
-        <div>
-          <h2>Ferramentas práticas para <span class="gold">aplicação imediata</span>.</h2>
-          <p class="section__intro">Além da exposição teórica, o site pode funcionar como ponto de acesso para instrumentos de trabalho: um checklist de pregão e uma calculadora de pesquisa de preços.</p>
-        </div>
-      </div>
-      <div class="tool-grid">
-        <a class="tool-card" href="./checklist/">
-          <span class="tool-card__icon">✓</span>
-          <h3>Check-list Pregão</h3>
-          <p>Roteiro operacional para conferência de documentos, atos preparatórios, fase externa, homologação e formalização contratual.</p>
-          <span class="tool-card__cta">Abrir ferramenta →</span>
-        </a>
-        <a class="tool-card" href="./calculadora/">
-          <span class="tool-card__icon">∑</span>
-          <h3>Calculadora de Pesquisa de Preços</h3>
-          <p>Ferramenta para inserir cotações, expurgar valores inconsistentes, calcular média, mediana, moda, desvio padrão e estimativa total.</p>
-          <span class="tool-card__cta">Abrir ferramenta →</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section" id="infograficos" data-nav="Infográficos">
-      <div class="section__head">
-        <div class="number">10</div>
-        <div>
-          <h2>Infográficos de apoio para <span class="gold">explicação visual</span>.</h2>
-          <p class="section__intro">As imagens podem ser usadas durante a apresentação ou abertas separadamente para discutir assimetria de informação, matriz de riscos e valor público nas compras estatais.</p>
-        </div>
-      </div>
-      <div class="visual-grid">
-        <figure class="visual-card">
-          <a href="./assets/assimetria-informacao.png" target="_blank" rel="noopener noreferrer">
-            <img src="./assets/assimetria-informacao.png" alt="Infográfico sobre assimetria de informação nas licitações">
-          </a>
-          <figcaption><strong>Assimetria de informação nas licitações.</strong> Seleção adversa, risco moral e mecanismos de aperfeiçoamento.</figcaption>
-        </figure>
-        <figure class="visual-card">
-          <a href="./assets/matriz-risco.png" target="_blank" rel="noopener noreferrer">
-            <img src="./assets/matriz-risco.png" alt="Infográfico sobre matriz de risco na Lei 14.133/2021">
-          </a>
-          <figcaption><strong>Matriz de risco na Lei nº 14.133/2021.</strong> Risco, incerteza, alocação eficiente e equilíbrio contratual.</figcaption>
-        </figure>
-        <figure class="visual-card">
-          <a href="./assets/futuro-compras-publicas.png" target="_blank" rel="noopener noreferrer">
-            <img src="./assets/futuro-compras-publicas.png" alt="Infográfico sobre o futuro das compras públicas além do menor preço">
-          </a>
-          <figcaption><strong>O futuro das compras públicas.</strong> Sustentabilidade, valor real e superação da leitura meramente monetária do preço.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section" id="roteiro" data-nav="Roteiro">
-      <div class="section__head">
-        <div class="number">11</div>
-        <div>
-          <h2>Roteiro mental para uma <span class="gold">boa contratação</span>.</h2>
-          <p class="section__intro">Um roteiro simples para orientar a conversa com gestores, equipes de planejamento e fiscais de contrato.</p>
-        </div>
-      </div>
-      <div class="checklist">
-        <div class="check"><span>1</span><span>Qual problema público a contratação resolve?</span></div>
-        <div class="check"><span>2</span><span>O edital revela informação suficiente para escolher bem?</span></div>
-        <div class="check"><span>3</span><span>O menor preço capta o valor real da proposta?</span></div>
-        <div class="check"><span>4</span><span>Os riscos foram identificados, alocados e justificados?</span></div>
-        <div class="check"><span>5</span><span>O contrato incentiva boa execução ou apenas pune a má execução?</span></div>
-        <div class="check"><span>6</span><span>O processo está documentado para permitir controle, aprendizagem e melhoria institucional?</span></div>
-      </div>
-    </section>
-
-    <section class="section" id="referencias" data-nav="Referências">
-      <div class="section__head">
-        <div class="number">12</div>
-        <div>
-          <h2>Artigos utilizados como <span class="gold">base teórica</span>.</h2>
-          <p class="section__intro">A apresentação sintetiza os principais argumentos dos textos indicados como referência.</p>
-        </div>
-      </div>
-      <ul class="references">
-        <li><strong><a href="https://www.caedjus.com/livroscaedjus2023/" target="_blank" rel="noopener noreferrer">A assimetria de informações e mecanismos econômicos de aperfeiçoamento do processo licitatório.</a></strong></li>
-        <li><strong><a href="https://www.caedjus.com/livroscaedjus2023/" target="_blank" rel="noopener noreferrer">Licitações sustentáveis: o desafio no modelo brasileiro.</a></strong></li>
-        <li><strong><a href="https://www.conjur.com.br/2023-jun-03/yuri-alexander-desafios-sustentabilidade-licitacoes2/" target="_blank" rel="noopener noreferrer">Os desafios da sustentabilidade nas licitações.</a></strong></li>
-        <li><strong><a href="https://www.forumconhecimento.com.br/v2/revista/P138/E52484/109109" target="_blank" rel="noopener noreferrer">A sustentabilidade na fase do planejamento das contratações públicas: estudos sob a ótica empírica.</a></strong></li>
-        <li><strong><a href="https://rcd.pgm.rio/index.php/rcd/article/view/155" target="_blank" rel="noopener noreferrer">Gestão de riscos e incertezas nos contratos administrativos: análise do modelo de aplicação da matriz de risco.</a></strong></li>
-        <li><strong><a href="https://www.conjur.com.br/2024-jan-26/cherstenton-e-a-necessidade-de-integridade-jurisprudencial-na-lei-de-licitacoes/" target="_blank" rel="noopener noreferrer">Chesterton e a necessidade de integridade jurisprudencial na Lei de Licitações.</a></strong></li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p><strong>Licitações como governança pública</strong></p>
-    <p>Planejamento • sustentabilidade • informação • riscos • ferramentas • valor público</p>
-  </footer>
-
-  <a class="top-link" id="topLink" href="#top" aria-label="Voltar ao topo">↑</a>
-
-  <script>
-    const progressBar = document.getElementById('progressBar');
-    const topLink = document.getElementById('topLink');
-    const sections = [...document.querySelectorAll('main section[id]')];
-    const navLinks = [...document.querySelectorAll('.nav a')];
-
-    function updateProgress() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = `${percent}%`;
-      topLink.classList.toggle('show', scrollTop > 520);
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+    <script>
+        // Expande os campos de texto para não cortar na impressão
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
         });
-      });
-    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
-
-    sections.forEach(section => observer.observe(section));
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-  </script>
+    </script>
 </body>
 </html>
